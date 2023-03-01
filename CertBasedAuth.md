@@ -167,6 +167,7 @@ In this section, we are going to log in to Azure Portal and create an IoT Hub re
       
       ![image](https://user-images.githubusercontent.com/68135957/222243887-1653c70b-772c-4661-a3de-57b834c7128b.png)
     
-    - Click Save. The screenshot looks like: 
+    - Click Save.
       
+Now we have completed all the steps required for generating the certificates and creating the devices on Azure Portal!
 
