@@ -164,8 +164,8 @@ In this section, we are going to log in to Azure Portal and create an IoT Hub re
     - On the resource Overview page, click "Devices" menu on the left side blade, and click "Add Device" button.
       ![image](https://user-images.githubusercontent.com/68135957/222243115-27b3b538-0036-4940-9df2-7d82566e24d9.png)  
     - In the "Create a device" page that appears, give *myiotdevice1* as the Device Id.  This name must match the commonname/FQDN we used when generating the client (device) certificate above. Select Authentication type *X.509 CA Signed*.  Keep "Connect this device to an IoT Hub" as *Enabled*.
-    
-    ![image](https://user-images.githubusercontent.com/68135957/222243887-1653c70b-772c-4661-a3de-57b834c7128b.png)
+      
+      ![image](https://user-images.githubusercontent.com/68135957/222243887-1653c70b-772c-4661-a3de-57b834c7128b.png)
     
     - Click Save. The screenshot looks like: 
       
