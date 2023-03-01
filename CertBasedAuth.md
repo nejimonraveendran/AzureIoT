@@ -135,42 +135,38 @@ Client certificates are device-specific. A client certificate is tied to a devic
   Now the CMD window screenshot looks somewhat like this:
   ![image](https://user-images.githubusercontent.com/68135957/222236802-db37afa2-b4ff-43bb-9686-df60f5114cc3.png)
 
-### 3. Create Azure IoT Hub and Import Server Certificate 
-In this section, we are going to log in to Azure Portal and create an IoT Hub and add 2 virtual devices (mydevice1, mydevice2).  We will set the authentication type as Root CA-signed certificate-based auth and import into Azure the root certificate we generated in the rootca folder.
- - **Create Azure IoT Hub:**
-    - Go to portal.azure.com, login, search for IoT Hub in the search box, and click Create (+) icon, and create an IoT Hub resource.
-   ![image](https://user-images.githubusercontent.com/68135957/221958580-346b8798-332a-4b2c-808a-09e665cd61a6.png)
-    - Under Networking, grant Public Access:
+### 4. Create Azure IoT Hub and Import Server Certificate 
+In this section, we are going to log in to Azure Portal and create an IoT Hub resource and add 1 virtual device named *myiotdevice1*.  We will set the authentication type as *Root CA-signed certificate-based*.  Then, we will import into Azure the root certificate *rootca.pem* we generated in the *rootca* folder.
+- **Create Azure IoT Hub:**
+  - Go to portal.azure.com, login, search for IoT Hub in the search box, and click Create (+) icon, and create an IoT Hub resource.
+   ![image](https://user-images.githubusercontent.com/68135957/222238822-3cefb43d-fda1-47fe-a05d-85633cc19f4b.png)
+   
+  - Under Networking, grant Public Access:
     ![image](https://user-images.githubusercontent.com/68135957/221958811-94a5769b-a7c5-4fab-a9f6-0145abdbcd06.png)
 
-    - Under Management, set permission leval as "Shared access policy + RBAC":
+  - Under Management, set permission leval as "Shared access policy + RBAC":
     ![image](https://user-images.githubusercontent.com/68135957/221959016-26de225c-d9d5-4812-acb0-b7408c12b165.png)
  
-    - Review and create.  Once done, click "Go to resource" button to go to the resource Overview page.  At the time of writing this, the Overview page displays a message that the Baltimore CyberTrust certificate will expire in 2025.  Since ours is a new implementation, click "What do I need to do" link and click "Migrate to DigiCert Global G2" button and follow instructions to update the certificate.
-    - On the resource Overview Page, make a note of the Host name.  We will need this info to connect our devices to the hub. 
- - **Import Root Certificate**
-    - On the resource page, click "Certificates" menu on the left side blade, and click the "Add" button.
-    - In the "Certificates" blade that appears, give a certficate name (eg. MyRealmHubRootCertificate).  Browse to the IotCerts/rootca folder and import the *rootca.pem* file we created above.  Check the "Set certificate status to verified on upload" check box.  
-    - Click Save. The screenshot looks like:
-
-      ![image](https://user-images.githubusercontent.com/68135957/221980845-347f1b52-331b-459c-8ee5-3bf668e1e0b8.png)
-
+  - Review and create.  Once done, click "Go to resource" button to go to the resource Overview page.  On the resource Overview Page, make a note of the *Hostname* field (in this example: *myorgiothub.azure-devices.net*).  We will need this info to connect our device to the hub.
     
-- **Create Virtual Devices**
-    - On the resource page, click "Devices" menu on the left side blade, and click "Add Device" button.
-    - Specify *mydevice1* as the Device Id.  This name must match the FQDN we used when generating the device certificate above.
-    - Use Authentication type as *X.509 CA Signed*.  Keep "Connect this device to an IoT Hub" as *Enabled*.
+    Note: At the time of writing this, the Overview page displays a message that the Baltimore CyberTrust certificate will expire in 2025.  Since ours is a new implementation, click "What do I need to do" link, then click "Migrate to DigiCert Global G2" button, and follow the instructions to update the certificate.
+ 
+ - **Import Root Certificate**
+    - On the IoT Hub resource Overview page, click "Certificates" menu on the left side blade, and click the "Add" button.
+      ![image](https://user-images.githubusercontent.com/68135957/222241701-618d40b8-80fd-4927-a563-ec5bcd510396.png)
+
+    - In the "Certificates" blade that appears, give a certficate name (eg. MyOrgIoTHubRootCertificate).  Browse to the *IotCerts/rootca* folder on your computer and import the *rootca.pem*.  Check the "Set certificate status to verified on upload" check box.  
+      ![image](https://user-images.githubusercontent.com/68135957/222242138-652c11e9-6f60-47e2-a46a-4274ea8bf6df.png)      
+
+    - Click Save.
+      
+- **Create Logical Device myiotdevice1**
+    - On the resource Overview page, click "Devices" menu on the left side blade, and click "Add Device" button.
+      ![image](https://user-images.githubusercontent.com/68135957/222243115-27b3b538-0036-4940-9df2-7d82566e24d9.png)  
+    - In the "Create a device" page that appears, give *myiotdevice1* as the Device Id.  This name must match the commonname/FQDN we used when generating the client (device) certificate above. Select Authentication type *X.509 CA Signed*.  Keep "Connect this device to an IoT Hub" as *Enabled*.
+    
+    ![image](https://user-images.githubusercontent.com/68135957/222243887-1653c70b-772c-4661-a3de-57b834c7128b.png)
+    
     - Click Save. The screenshot looks like: 
       
-      ![image](https://user-images.githubusercontent.com/68135957/221964335-3006e430-15d8-446b-a194-8fb479cef513.png)
-    
-    - Repeat the above steps and create one more device (Device Id: *mydevice2*).
-    
-- **Create Shared Access Policies**
-    - On the resource page, click "Shared access policies" menu on the left side blade, add click "Add shared access policy"
-    - In the "Add shared access policy" blade that appears, enter a custom policy name (eg. MyRealmHubSAP) and check all read, write, and connect options (for testing only).  We will need this policy name later when we create shared access signature in client devices.
-    - Click Add. The screenshot looks like:
-
-      ![image](https://user-images.githubusercontent.com/68135957/221981014-49641ae9-0211-4c86-a0b5-2e5added8256.png)
-
 
