@@ -1,4 +1,4 @@
-# How to create an IoT Device in Azure IoT Hub with certificate-based authentication
+# How to create an IoT device in Azure IoT Hub with certificate-based authentication
 Azure IoT Hub supports 2 different types of device authentication:
 - Certificate-based authentication
 - Symmetric Key authentication
