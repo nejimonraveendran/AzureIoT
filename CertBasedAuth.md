@@ -103,7 +103,7 @@ If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](htt
   - Generate a self-signed root certificate from the root CSR: ``` openssl ca -selfsign -config rootca.conf -in rootca.csr -out rootca.crt -extensions ca_ext ``` 
 - **Create PEM certificate out of CRT certificate:** In Azure, we need to upload a certificate in PEM format, so convert the CRT format to PEM using the command: ``` openssl x509 -in rootca.crt -out rootca.pem -outform PEM ```.  
   
-  We will use later in the article when we go to Azure Portal to create the IoT device.  After the above operations, the CMD window looks somewhat like the following:
+  We will use the PEM certificate later in the article when we go to Azure Portal to create the logical IoT device.  After the above operations, the CMD window looks somewhat like the following:
   ![image](https://user-images.githubusercontent.com/68135957/222210272-4a194d0b-a67c-4c35-a2ee-ff047f7d7ae5.png)
 
   Now you can see a *rootca.crt* created in the *rootca* folder:
@@ -111,33 +111,32 @@ If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](htt
 
 Now that we have the root certificate are generated, we are ready to generate the client/device certificates.
 
-### 3. Create Client (IoT Device) Certificates
-We will generate 2 certificates in the IotCerts\devices folder, for devices named *mydevice1* and *mydevice2*, both signed using the root certificate generated above.  Step are:
-- Create directory structure IotCerts\devices:
-  
-  ![image](https://user-images.githubusercontent.com/68135957/221940830-ea43287a-445c-44c9-bedd-bc8f7af956ef.png)
- 
-- Create a private keys and certificate signing requests (CSR) for our devices using the following commands (from within the devices folder).  When prompted for the Common Name/FQDN, enter *mydevice1* and *mydevice2* in the following commands.  These device names are important, because we will need to use those when we create virtual devices on Azure IoT Hub later: 
+### 3. Create Client (IoT Device) Certificate
+Client certificates are device-specific. A client certificate is tied to a device name, which should match the logical device name configured on the Azure Portal. We will generate a certificate for a device named *myiotdevice1*, which we are going to create later in Azure IoT Hub.
+- **Create Client (Device) Certificates Directory Structure:** While you are at the *rootca* folder on the command prompt, issue following commands:
+  ```bash
+    cd..
+    mkdir devices
+    cd devices
+    mkdir db
+  ```
+- **Generate client certificate for myiotdevice1:** 
+- The following commands (within the *devices* folder) create a private key, a CSR, and finally the actual certificate in CRT format. Optionally, you might also want to generate a certificate in PFX format from the CRT format to use it on certain devices/desktop applications to simulate a physical IoT device.  When prompted for the Common Name/FQDN, enter *myiotdevice1*: 
   ```bash     
     openssl rand -hex 16 > db/serial
-    openssl genpkey -out mydevice1.key -algorithm RSA -pkeyopt rsa_keygen_bits:2048 
-    openssl req -new -key mydevice1.key -out mydevice1.csr
-    openssl ca -config ..\rootca\rootca.conf -in mydevice1.csr -out mydevice1.crt -extensions client_ext
-    openssl pkcs12 -export -in mydevice1.crt -inkey mydevice1.key -out mydevice1.pfx
-    
-    openssl rand -hex 16 > db/serial
-    openssl genpkey -out mydevice2.key -algorithm RSA -pkeyopt rsa_keygen_bits:2048 
-    openssl req -new -key mydevice2.key -out mydevice2.csr
-    openssl ca -config ..\rootca\rootca.conf -in mydevice2.csr -out mydevice2.crt -extensions client_ext
-    openssl pkcs12 -export -in mydevice2.crt -inkey mydevice2.key -out mydevice2.pfx  
+    openssl genpkey -out myiotdevice1.key -algorithm RSA -pkeyopt rsa_keygen_bits:2048 
+    openssl req -new -key myiotdevice1.key -out myiotdevice1.csr
+    openssl ca -config ..\rootca\rootca.conf -in myiotdevice1.csr -out myiotdevice1.crt -extensions client_ext
+    openssl pkcs12 -export -in myiotdevice1.crt -inkey myiotdevice1.key -out myiotdevice1.pfx
   ```
   
-  Sample CMD window screenshot looks like this:
-  ![image](https://user-images.githubusercontent.com/68135957/221955110-afcb30cc-7fb2-4cb8-8321-9f946662a41d.png)
+  Note: If you want to generate more than one client certificates, for example for a device named *mydevice2*, repeat the above 5 commands with the correct device name.
+  
+  Now the CMD window screenshot looks somewhat like this:
+  ![image](https://user-images.githubusercontent.com/68135957/222236802-db37afa2-b4ff-43bb-9686-df60f5114cc3.png)
 
-
- ### 3. Create Azure IoT Hub 
- In this section, we are going to log in to Azure Portal and create an IoT Hub and add 2 virtual devices (mydevice1, mydevice2).  We will set the authentication type as Root CA-signed certificate-based auth and import into Azure the root certificate we generated in the rootca folder.
+### 3. Create Azure IoT Hub and Import Server Certificate 
+In this section, we are going to log in to Azure Portal and create an IoT Hub and add 2 virtual devices (mydevice1, mydevice2).  We will set the authentication type as Root CA-signed certificate-based auth and import into Azure the root certificate we generated in the rootca folder.
  - **Create Azure IoT Hub:**
     - Go to portal.azure.com, login, search for IoT Hub in the search box, and click Create (+) icon, and create an IoT Hub resource.
    ![image](https://user-images.githubusercontent.com/68135957/221958580-346b8798-332a-4b2c-808a-09e665cd61a6.png)
