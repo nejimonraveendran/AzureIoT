@@ -1,17 +1,24 @@
 # How to create server and client certificates for certificate-based device authentication in Azure IoT
-This document details how to create certificates for certificate-based authentication for IoT devices.  We will be creating a root certificate, which we will upload into Azure portal. We will also be creating a client certificate, which is to be used on the IoT device for authentication. 
+Azure IoT Hub supports 2 different types of device authentication:
+- Certificate-based authentication
+- Symmetric Key authentication
 
-Important Note: The certificate generation method uses OpenSSL CA signing with our own certificate authority, which is recommended for testing purpose only.  For production, use a proper public certificate authority (eg. Entrust). This tutorial assumes that these operations are carried out on a Windows machine.
+For certificate-based authentication, we need to create a pair certificates: A server certificate to be uploaded to the Azure Portal when we create logical IoT devices on the portal, and a client certificate to be kept on the physical/simulated IoT device and to be sent to client at the time of connection.
+
+This document details how to create a certificate pair using OpenSSL. 
+
+Important Note: The certificate generation method uses our own custom certificate signing authority, which is recommended for testing purpose only.  For production scenarios, use a proper public certificate authority (eg. Entrust). This tutorial assumes that these operations are carried out on a Windows machine.
 
 This document is based on the official Microsoft documentation, but uses a simplified approach involving fewer steps, since we are doing it for testing.  The link is here for reference: https://learn.microsoft.com/en-us/azure/iot-hub/tutorial-x509-openssl
 
 ### 1. Install OpenSSL
 If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](https://wiki.openssl.org/index.php/Binaries).  Add the OpenSSL bin path it to Windows PATH environment variable.
 
-### 2. Create Server (IoT Hub) Certificate
-- In C drive, create a folder called IoTCerts, open CMD as Adminstrator within this folder.
-- **Create root CA directory structure:** Issue following commands to create 
+### 2. Create a Root Certificate to be used on Server (IoT Hub)
+- **Create root CA directory structure:** Open command prompt (CMD) in C drive as Adminstrator, and issue following commands: 
   ```bash
+    mkdir IoTCerts
+    cd IoTCerts
     mkdir rootca
     cd rootca
     mkdir certs db private
@@ -21,8 +28,9 @@ If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](htt
   ```
   The window looks like the following:
 
-  ![image](https://user-images.githubusercontent.com/68135957/221914468-0e5f6c69-a932-4621-a211-582d4454455b.png)
-- **Create root.ca config file:** Open the *rootca* folder in Windows Explorer and create a file with the name *rootca.conf*.  Open that file in Notepad and paste the following content:
+  ![image](https://user-images.githubusercontent.com/68135957/222215950-bfbe9c31-ef65-429e-8814-d42110f2ba98.png)
+
+- **Create root.ca config file:** Open the *rootca* folder in Windows Explorer and create a file with the name *rootca.conf*.  Open that file in Notepad and paste the following content. This configuration will work as the base for all the certificates we are going to generate, so change the values in the configuration according to your liking.  For example, you might want to use a different *domain_suffix* and *commonName* as per your liking.  The *default_days* sets the default expiration period of the certificates we are going to generate. Default is 10 years (3650 days).    
 
   ```
   [default]
@@ -89,17 +97,20 @@ If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](htt
   keyUsage                 = critical,digitalSignature
   subjectKeyIdentifier     = hash
   ```
-- Inside the file, change the domain_suffix, commonName, etc., according to your liking. Here is a completed sample file.
-- **Create a root CA**:  2 steps here (both within the *rootca* folder. When prompted for a passphrase, enter a custom string and note it down):
-  - Create a private key: ``` openssl req -new -config rootca.conf -out rootca.csr -keyout private/rootca.key ```
-  - Create a self-signed certificate: ``` openssl ca -selfsign -config rootca.conf -in rootca.csr -out rootca.crt -extensions ca_ext ```
-  - Create a PEM certificate out of CRT certificate just created: ``` openssl x509 -in rootca.crt -out rootca.pem -outform PEM ``` 
-    Output window looks like the following:
-    ![image](https://user-images.githubusercontent.com/68135957/221921095-5314fb8f-01c6-4ca3-88e2-6e81efca9d56.png)
+
+- **Create a root Certificate Authority (CA)**:  Next, we need to create our own certificate authority, who will sign all our certificates. As mentioned above, this is for testing only. For production scenarios, a public CA should be used. There are 2 steps involved here. From the CMD prompt (under the *rootca* folder), issue following commands (when prompted for a passphrase, enter a custom string and note it down):
+  - Generate a certificate signing request and a private key: ``` openssl req -new -config rootca.conf -out rootca.csr -keyout private/rootca.key ```  
+  - Generate a self-signed root certificate from the root CSR: ``` openssl ca -selfsign -config rootca.conf -in rootca.csr -out rootca.crt -extensions ca_ext ``` 
+- **Create PEM certificate out of CRT certificate:** In Azure, we need to upload a certificate in PEM format, so convert the CRT format to PEM using the command: ``` openssl x509 -in rootca.crt -out rootca.pem -outform PEM ```.  
   
-    Now you can see a *rootca.crt* created in the *rootca* folder:
-    ![image](https://user-images.githubusercontent.com/68135957/221923082-c48ef4fd-a68a-46e4-a6b9-6d9859acd488.png)
-  
+  We will use later in the article when we go to Azure Portal to create the IoT device.  After the above operations, the CMD window looks somewhat like the following:
+  ![image](https://user-images.githubusercontent.com/68135957/222210272-4a194d0b-a67c-4c35-a2ee-ff047f7d7ae5.png)
+
+  Now you can see a *rootca.crt* created in the *rootca* folder:
+  ![image](https://user-images.githubusercontent.com/68135957/221923082-c48ef4fd-a68a-46e4-a6b9-6d9859acd488.png)
+
+Now that we have the root certificate are generated, we are ready to generate the client/device certificates.
+
 ### 3. Create Client (IoT Device) Certificates
 We will generate 2 certificates in the IotCerts\devices folder, for devices named *mydevice1* and *mydevice2*, both signed using the root certificate generated above.  Step are:
 - Create directory structure IotCerts\devices:
