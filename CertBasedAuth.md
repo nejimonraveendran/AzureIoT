@@ -1,11 +1,9 @@
 # How to create an IoT device in Azure IoT Hub with certificate-based authentication
 Azure IoT Hub supports 2 different types of device authentication:
-- Certificate-based authentication
-- Symmetric Key authentication
+- Symmetric Key authentication:  In this method, our IoT device will have a pre-created symmetric key on Azure IoT hub.  At the time of the authentication, the device will present a shared access signature based on the key as the proof of identity. 
+- Certificate-based authentication:  This is the method we are discussing in this document.
 
-For certificate-based authentication, we need to create a pair of certificates: A server certificate to be uploaded to the Azure Portal when we create a logical IoT device on the portal, and a client certificate to be kept on the physical/simulated IoT device and to be sent to server at the time of connection/authentication.
-
-This document details how to create a certificate pair using OpenSSL. 
+The certificate-based authentication works like this: There will be a root certificate signed by a certificate authority.  The root certificate will be uploaded to the Azure IoT Hub. We will then create one client certificate, signed by the same certificate authority, for each IoT device we want to authenticate.  At the time of the authentication, our device will present the client certificate as the proof of identity. This document details how to create a certificate authority, root certificate, and the client certificate(s). 
 
 Important Note: The certificate generation method uses our own custom certificate signing authority, which is recommended for testing purposes only.  For production scenarios, use a proper public certificate authority (eg. Entrust). This tutorial assumes that the operations are carried out on a Windows machine.
 
