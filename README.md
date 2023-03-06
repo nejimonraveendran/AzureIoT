@@ -42,16 +42,16 @@ A few key things I learned that make Azure IoT Hub and other popular cloud-based
 3. Unlike other MQTT brokers, very nice capability Azure IoT Hub has up its sleeve is the synchronous communication through Direct Methods.  While turning on/off an appliance can be implemented through async publish-subscribe pattern, it will be much simpler to do so if it can be done in a synchronous manner.  Direct Method helps us achieve the synchronous communication, where our application sends a command to the IoT device to turn on/off the appliance and gets immediate response from the device about the success/failure of the action.  In a way, this justifies the use of Azure IoT Hub in our simple use case, because we are solving a synchronous problem with a synchronous solution. 
 
 ## About Azure App Service Web App
-We will host our app as an Azure App Service Web App.  Azure App Service is a [platform as service (PaaS)](https://en.wikipedia.org/wiki/Platform_as_a_service) offering with numerous features that enables you to host web applications and REST APIs easily and quickly.  I think App Service is a perfect middleground between virtual machines (VMs) and containerization technologies because you do not have to manage a VM infrastructure and at the same time you do not have to deal with the complexities of a containerization platform such as Kubernetes. Read more about Azure App Service and its features [here]((https://learn.microsoft.com/en-us/azure/app-service/overview).  
-
-
+We will host our app as an Azure App Service Web App.  Azure App Service is a [platform as a service (PaaS)](https://en.wikipedia.org/wiki/Platform_as_a_service) offering with numerous features that enables you to host web applications and REST APIs easily and quickly.  Why don't we use containerization?  For a use case like this, I think App Service is a perfect middleground between hosting web applications on virtual machines (VMs) and containerization technologies such as Docker/Kubernetes, because you do not have to manage a VM infrastructure and at the same time do not have to deal with the complexities of containerization. Read more about Azure App Service and its features [here](https://learn.microsoft.com/en-us/azure/app-service/overview).  
 
 ## About Espressif ESP32
-About esp32
+For the IoT device, we will use Espressif ESP32.  ESP32 is a low-cost, low-power microcontroller with Bluetooth and WiFi capabilities as well as many general purpose input/output (GPIO) pins that can be programmed using C++.  For example, you could program one of the GPIO pins as input GPIOs and read current room temperature and send it to a cloud temperature.  You could also program the pins as output  
 
 ## Implementation
  Overall implementation notes 
- 
+Refer to this article to learn how to create an Azure App Service Web App 
+
+
  ### Provision IoT Hub
  instructions to provision iot hub
  
