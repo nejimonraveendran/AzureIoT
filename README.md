@@ -4,8 +4,11 @@ Internet of Things (IoT) and Azure are 2 areas I love to play around. The purpos
 
 
 ## The Problem
-**The requirement/user Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop even while I am away from my home. 
-
+**The requirement/user Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop with the following conditions.  
+1. I should be able to control the appliance even while I am away from my home.
+2. The communication between my application and the device should be secure, i.e., encrypted with TLS 1.2.
+3. Access to the ON/OFF button page should be controlled by proper authentication and authorization.  Currently, only I should be able to log in.
+4. If I decide to build it as a native mobile app, I should be able to do so without making huge changes to the web application.  
 
 ## The Solution
 The architecture of the solution looks like the following:
@@ -34,12 +37,14 @@ A few key things I learned that make Azure IoT Hub and other popular cloud-based
    - Unlike other MQTT providers, you cannot use a Device/Client ID without registering it on the server.
    - Other MQTT providers lets you use custom topic names. In Azure IoT Hub, topic channels use a specific naming convention, and the messages should be sent to the device-specific topic channel.  
    - Usually in MQTT protocol, both the publisher and subscriber uses the same topic name for communication.  In Azure IoT Hub, they are named differently.  
-
-   It makes me think that Microsoft's focus is more on providing a robust IoT platform so that their customers can build large industrial-grade secure solutions with   rich capabilities through integration with other Azure services.  For this reason, you may be better off with a generic MQTT broker for simple use cases such as turnig on/off an appliance.  However, it is still an exercice worth doing because the learning you obtain from the exercise will be valuable in determining a solution for your next IoT project.     
+     
+   It makes me think that Microsoft's focus is more on offering a robust IoT platform with numerous integration endpoints and analytical capabilities rather than providing a generic MQTT broker so that their customers can build large industrial-grade IoT solutions in combination with other Azure services.  For this reason, you may be better off with a generic MQTT broker for simple use cases such as turnig on/off an appliance.  However, it is still an exercice worth doing because the learning you obtain from the exercise will be valuable in determining a solution for your next IoT project.     
 3. Unlike other MQTT brokers, very nice capability Azure IoT Hub has up its sleeve is the synchronous communication through Direct Methods.  While turning on/off an appliance can be implemented through async publish-subscribe pattern, it will be much simpler to do so if it can be done in a synchronous manner.  Direct Method helps us achieve the synchronous communication, where our application sends a command to the IoT device to turn on/off the appliance and gets immediate response from the device about the success/failure of the action.  In a way, this justifies the use of Azure IoT Hub in our simple use case, because we are solving a synchronous problem with a synchronous solution. 
 
 ## About Azure App Service Web App
-About web app
+We will host our app as an Azure App Service Web App.  Azure App Service is a [platform as service (PaaS)](https://en.wikipedia.org/wiki/Platform_as_a_service) offering with numerous features that enables you to host web applications and REST APIs easily and quickly.  I think App Service is a perfect middleground between virtual machines (VMs) and containerization technologies because you do not have to manage a VM infrastructure and at the same time you do not have to deal with the complexities of a containerization platform such as Kubernetes. Read more about Azure App Service and its features [here]((https://learn.microsoft.com/en-us/azure/app-service/overview).  
+
+
 
 ## About Espressif ESP32
 About esp32
