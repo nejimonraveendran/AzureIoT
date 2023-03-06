@@ -2,18 +2,21 @@
 
 Internet of Things (IoT) and Azure are 2 areas I love to play around. The purpose of this article is to document the hands-on experience and learnings obtained from implementing a cloud- and IoT-based home automation project.  The technologies used are Azure IoT Hub, ASP.NET Core, and ESP32 microcontroller. If you follow this tutorial, you will basically build a solution to securely control (on/off) any electric appliance (e.g., a home light) remotely through your smartphone or computer. 
 
-There are 3 main modules in the solution:
-1. **ASP.NET MVC Web Application:**  The user-facing UI application that contains an on/off button.
-2. **Azure IoT Hub:**  The IoT messaging hub provisioned in Azure.   
-3. **Espressif ESP32 Micro-controller:** The physical IoT device that sits at home/on premises and connected to an electromagnetic relay, which can control any electric appliance.
 
-## The Problem and Solution
-**The Requirement/User Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop even while I am away from my home. 
+## The Problem
+**The requirement/user Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop even while I am away from my home. 
 
+
+## The Solution
 The architecture of the solution looks like the following:
 ![image](https://user-images.githubusercontent.com/68135957/223001314-045b2ff0-0edc-40b1-9ab3-202e3b8e67f9.png)
 
-My solution looks and works like this: I will build an ASP.NET Core MVC Application, which will be hosted as an [Azure App Service Web App](https://learn.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs) with a public URL so that I can access it from my personal devices even when I am away from home.  The application's home page will show a button.  When I click the button, the web application will publish an "on/off" message to the Azure IoT Hub. On the other side, an Espressif ESP32 microcontroller will already have a connection established to the IoT Hub and be subscribing to messages from the web application.  Upon reception of the message from the web application, IoT Hub will send it to the device, and the device will act accordingly, i.e., turn on or off the appliance.  In addition, the device will respond the current status of the light back to the web application so that I, the user, will get immediate feedback about the success/failure of the action.        
+There are 3 main modules in the solution:
+1. **Azure IoT Hub:**  The IoT messaging hub provisioned in Azure.   
+2. **ASP.NET MVC Web Application:**  The user-facing web application, publishing "on/off" messages to the Azure IoT Hub.
+3. **Espressif ESP32 Micro-controller:** The physical IoT device at home, subscribing to "on/off" messages from Azure IoT Hub.
+
+**The solution looks and works like this:** I will build an ASP.NET Core MVC Application, which will be hosted as an [Azure App Service Web App](https://learn.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs) with a public URL so that I can access it from my personal devices even when I am away from home.  The application's home page will show an ON/OFF button.  When I click the button, the web application will publish an "on/off" message to the Azure IoT Hub. On the other side, an [Espressif ESP32](https://en.wikipedia.org/wiki/ESP32) microcontroller at home has already established a connection to the IoT Hub and beeen subscribing to messages from the hub.  Upon reception of the message from the web application, the IoT Hub will send it to the device, and the device will act accordingly, i.e., turn on or off the appliance through an electromagnetic relay.  In addition, the device will report the current status of the light back to the web application through the IoT Hub so that I, the user, will get immediate feedback about the success/failure of the action.        
 
 ## About Azure IoT Hub
 [Azure IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/iot-concepts-and-iot-hub) is a fully managed PaaS solution that functions as a messaging hub between applications and physical IoT devices. There are several messaging patterns that the IoT Hub supports.  They are mainly:
@@ -25,7 +28,7 @@ Since the nature of the #1 and #2 above are asynchronous, they are more suitable
 
 Azure IoT Hub supports several communication protocols as well (HTTPS, AMQP, WebSockets, MQTT, etc.).  In any IoT-based solution, probably the most widely used communication protocol is [MQTT](https://en.wikipedia.org/wiki/MQTT). MQTT is a publish-subscribe pattern, where devices can publish messages as "topics" to an MQTT server (aka broker) and other devices can subscribe to those topics and receive messages in real-time. There are many cloud-based MQTT servers availale on the Internet  such as [CloudMQTT](https://www.cloudmqtt.com/), [HiveMQTT](https://www.hivemq.com/), etc. HiveMQ lets you create a free account, which you can use for personal projects. 
 
-A few key things I learned that make Azure IoT Hub and other popular cloud-based MQTT servers from each other are:
+A few key things I learned that make Azure IoT Hub and other popular cloud-based MQTT servers distinguish from each other are:
 1. Unlike CloudMQTT, HiveMQTT, etc., Azure IoT Hub is not a generic MQTT broker.  Rather, Azure IoT Hub is a much more powerful system that connects with a variety of other Azure back-end services providing a [plethora of features and integrations](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/iot).
 2. Though MQTT is one of the most popular communication protocols in the IoT world, Azure [does not fully support MQTT protocol](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support). Some of the facts I personally observed were:
    - Unlike other MQTT providers, you cannot use a Device/Client ID without registering it on the server.
@@ -34,5 +37,35 @@ A few key things I learned that make Azure IoT Hub and other popular cloud-based
 
    It makes me think that Microsoft's focus is more on providing a robust IoT platform so that their customers can build large industrial-grade secure solutions with   rich capabilities through integration with other Azure services.  For this reason, you may be better off with a generic MQTT broker for simple use cases such as turnig on/off an appliance.  However, it is still an exercice worth doing because the learning you obtain from the exercise will be valuable in determining a solution for your next IoT project.     
 3. Unlike other MQTT brokers, very nice capability Azure IoT Hub has up its sleeve is the synchronous communication through Direct Methods.  While turning on/off an appliance can be implemented through async publish-subscribe pattern, it will be much simpler to do so if it can be done in a synchronous manner.  Direct Method helps us achieve the synchronous communication, where our application sends a command to the IoT device to turn on/off the appliance and gets immediate response from the device about the success/failure of the action.  In a way, this justifies the use of Azure IoT Hub in our simple use case, because we are solving a synchronous problem with a synchronous solution. 
+
+## About Azure App Service Web App
+About web app
+
+## About Espressif ESP32
+About esp32
+
+## Implementation
+ Overall implementation notes 
+ 
+ ### Provision IoT Hub
+ instructions to provision iot hub
+ 
+ ### Build Web Application
+ instructions to build web app
+
+ ### Build the Device
+ #### Wiring Diagram
+ instructions to wire the relay
+
+ #### Coding
+instructions to build esp code
+
+## Conclusion
+Overall implementation notes 
+
+
+
+
+
 
   
