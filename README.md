@@ -45,18 +45,19 @@ A few key things I learned that make Azure IoT Hub and other popular cloud-based
 We will host our app as an Azure App Service Web App.  Azure App Service is a [platform as a service (PaaS)](https://en.wikipedia.org/wiki/Platform_as_a_service) offering with numerous features that enables you to host web applications and REST APIs easily and quickly.  Why don't we use containerization?  For a use case like this, I think App Service is a perfect middleground between hosting web applications on virtual machines (VMs) and containerization technologies such as Docker/Kubernetes, because you do not have to manage a VM infrastructure and at the same time do not have to deal with the complexities of containerization. Read more about Azure App Service and its features [here](https://learn.microsoft.com/en-us/azure/app-service/overview).  
 
 ## About Espressif ESP32
-For the IoT device, we will use Espressif ESP32.  ESP32 is a low-cost, low-power microcontroller with Bluetooth and WiFi capabilities as well as many general purpose input/output (GPIO) pins that can be programmed using C++.  For example, you could program one of the GPIO pins as input GPIOs and read current room temperature and send it to a cloud temperature.  You could also program the pins as output  
+For the IoT device, we will use Espressif ESP32.  ESP32 is a low-cost, low-power microcontroller with Bluetooth and WiFi capabilities as well as many general purpose input/output (GPIO) pins that can be programmed using C++.  For example, you could set a GPIO pin's mode as input and attach a temperature sensor to it, which will read the current room temperature and send it to a cloud server such as IoT Hub.  On the other hand, you could also program a pin as output and emit a boolean HIGH/LOW voltage to the pin to control an output device.  We use the latter approach in our example to control an electromagnetic relay, which in turn control the appliance.  ESP32 is available in different flavors.  For reference, I use an ESP32-CAM module, which is available on Amazon.  Read more about different ESP32 modules [here](https://en.wikipedia.org/wiki/ESP32).  
 
 ## Implementation
- Overall implementation notes 
-Refer to this article to learn how to create an Azure App Service Web App 
-
+Since we have 3 modules, our implementation will also be split into 3 steps. We will start with the provisioning of Azure IoT Hub, then build and host the web application, and finally build the ESP32 part and test all of them together.  
 
  ### Provision IoT Hub
- instructions to provision iot hub
+ Prerequisites:  A valid Azure subscription. To provision IoT Hub, follow this tutorial.  
  
  ### Build Web Application
  instructions to build web app
+ Refer to this article to learn how to create an Azure App Service Web App 
+ 
+ #### Testing without actual device
 
  ### Build the Device
  #### Wiring Diagram
