@@ -7,10 +7,15 @@ There are 3 main modules in the solution:
 2. **Azure IoT Hub:**  The IoT messaging hub provisioned in Azure.   
 3. **Espressif ESP32 Micro-controller:** The physical IoT device that sits at home/on premises and connected to an electromagnetic relay, which can control any electric appliance.
 
-## How It Works
+## The Problem and Solution
+**The Requirement/User Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop even while I am away from my home. 
+
 The architecture of the solution looks like the following:
 ![image](https://user-images.githubusercontent.com/68135957/223001314-045b2ff0-0edc-40b1-9ab3-202e3b8e67f9.png)
 
+My solution looks and works like this: I will build an ASP.NET Core MVC Application, which will be hosted as an [Azure App Service Web App](https://learn.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs) with a public URL so that I can access it from my personal devices even when I am away from home.  The application's home page will show a button.  When I click the button, the web application will publish an "on/off" message to the Azure IoT Hub. On the other side, an Espressif ESP32 microcontroller will already have a connection established to the IoT Hub and be subscribing to messages from the web application.  Upon reception of the message from the web application, IoT Hub will send it to the device, and the device will act accordingly, i.e., turn on or off the appliance.  In addition, the device will respond the current status of the light back to the web application so that I, the user, will get immediate feedback about the success/failure of the action.        
+
+## About Azure IoT Hub
 [Azure IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/iot-concepts-and-iot-hub) is a fully managed PaaS solution that functions as a messaging hub between applications and physical IoT devices. There are several messaging patterns that the IoT Hub supports.  They are mainly:
 1. **Device to Cloud (D2C) messaging:**  In this pattern, an IoT device asynchronously sends messages to IoT Hub.  This is also known as Telemetry.
 2. **Cloud to Device (C2D) messaging:**  A cloud application asynchronously sends messages back to the physical device.
