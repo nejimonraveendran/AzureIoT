@@ -51,7 +51,7 @@ For the IoT device, we will use Espressif ESP32.  ESP32 is a low-cost, low-power
 Since we have 3 modules, our implementation will also be split into 3 steps. We will start with the provisioning of Azure IoT Hub, then build and host the web application, and finally build the ESP32 part and test all of them together.  
 
  ### Provision IoT Hub
- Prerequisites:  A valid Azure subscription. To provision IoT Hub, follow this tutorial.  
+ Prerequisites:  A valid Azure subscription. To provision IoT Hub, follow this **[Azure IoT Hub provisioning tutorial]**(https://github.com/nejimonraveendran/AzureIoT/tree/main/cert-based-auth).  From the provisioning tutorial, it is evident that we are using certificate-based device authentication. Another type of authentication supported by IoT Hub is a shared access signature (SAS) based on a symmetric key, but SAS tokens have short lifetime, and we will need to re-create new tokens every few minutes to keep it really secure.     
  
  ### Build Web Application
  instructions to build web app
