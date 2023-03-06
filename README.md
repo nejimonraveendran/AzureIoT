@@ -18,4 +18,6 @@ The architecture of the solution looks like the following:
 
 Since the nature of the #1 and #2 above are asynchronous, they are more suitable for use cases where we just fire a message and forget, i.e., we do not need to wait for an immediate response.  In our use case, it is desired to get an immediate response if the appliance was turned on/off.  For this reason, the best pattern to use is Direct Method.
 
-Azure IoT Hub supports several communication protocols as well (HTTPS, AMQP, WebSockets, MQTT, etc.).  In any IoT-based solution, probably the most widely used communication protocol is [MQTT](https://en.wikipedia.org/wiki/MQTT).    
+Azure IoT Hub supports several communication protocols as well (HTTPS, AMQP, WebSockets, MQTT, etc.).  In any IoT-based solution, probably the most widely used communication protocol is [MQTT](https://en.wikipedia.org/wiki/MQTT). MQTT is a publish-subscribe pattern, where devices can publish messages as "topics" to an MQTT server (aka broker) and other devices can subscribe to those topics and receive messages in real-time. There are many cloud-based MQTT servers availale on the Internet  such as [CloudMQTT](https://www.cloudmqtt.com/), [HiveMQTT](https://www.hivemq.com/), etc. HiveMQ lets you create a free account, which you can use for personal projects. 
+
+Two key things I learned     
