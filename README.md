@@ -55,14 +55,18 @@ Since we have 3 modules, our implementation will also be split into 3 parts. We 
  
  If you have followed the provisioning tutorial, you now have the following:
  
- 1. A logical device in IoT Hub named *myiotdevice1*.
- 2. A client certificate named *myiotdevice1.crt* and its private key file named *myiotdevice1.key* on your local computer.
+ 1. A logical device named *myiotdevice1* in Azure IoT Hub.
+ 2. A client certificate named *myiotdevice1.crt* and its private key file *myiotdevice1.key* on your local computer.
 
  ### Build Web Application
  instructions to build web app
+
  Refer to this article to learn how to create an Azure App Service Web App 
  
  #### Testing without actual device
+
+ #### Hosting in Azure App Service
+
 
  ### Build the Device
  #### Wiring Diagram
