@@ -48,11 +48,16 @@ We will host our app as an Azure App Service Web App.  Azure App Service is a [p
 For the IoT device, we will use Espressif ESP32.  ESP32 is a low-cost, low-power microcontroller with Bluetooth and WiFi capabilities as well as many general purpose input/output (GPIO) pins that can be programmed using C++.  For example, you could set a GPIO pin's mode as input and attach a temperature sensor to it, which will read the current room temperature and send it to a cloud server such as IoT Hub.  On the other hand, you could also program a pin as output and emit a boolean HIGH/LOW voltage to the pin to control an output device.  We use the latter approach in our example to control an electromagnetic relay, which in turn control the appliance.  ESP32 is available in different flavors.  For reference, I use an ESP32-CAM module, which is available on Amazon.  Read more about different ESP32 modules [here](https://en.wikipedia.org/wiki/ESP32).  
 
 ## Implementation
-Since we have 3 modules, our implementation will also be split into 3 steps. We will start with the provisioning of Azure IoT Hub, then build and host the web application, and finally build the ESP32 part and test all of them together.  
+Since we have 3 modules, our implementation will also be split into 3 parts. We will start with the provisioning of Azure IoT Hub, then build and host the web application, and finally build the ESP32 part and test all of them together.  
 
  ### Provision IoT Hub
- Prerequisites:  A valid Azure subscription. To provision IoT Hub, follow this **[Azure IoT Hub provisioning tutorial]**(https://github.com/nejimonraveendran/AzureIoT/tree/main/cert-based-auth).  From the provisioning tutorial, it is evident that we are using certificate-based device authentication. Another type of authentication supported by IoT Hub is a shared access signature (SAS) based on a symmetric key, but SAS tokens have short lifetime, and we will need to re-create new tokens every few minutes to keep it really secure.     
+ To provision IoT Hub, follow this [Azure IoT Hub provisioning tutorial](https://github.com/nejimonraveendran/AzureIoT/tree/main/cert-based-auth).  
  
+ If you have followed the provisioning tutorial, you now have the following:
+ 
+ 1. A logical device in IoT Hub named *myiotdevice1*.
+ 2. A client certificate named *myiotdevice1.crt* and its private key file named *myiotdevice1.key* on your local computer.
+
  ### Build Web Application
  instructions to build web app
  Refer to this article to learn how to create an Azure App Service Web App 

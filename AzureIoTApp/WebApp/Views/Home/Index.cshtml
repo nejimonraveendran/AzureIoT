@@ -1,0 +1,7 @@
+﻿
+<div class="text-center home-container">
+    <form asp-action="Index" class="btn-container">
+        <input type="hidden" name="currentState" value="@ViewBag.CurrentState" />
+        <button type="submit" id="btn-on-off" class="@ViewBag.ButtonClass">@ViewBag.ButtonText</button>
+    </form>
+</div>
