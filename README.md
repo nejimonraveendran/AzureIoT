@@ -5,7 +5,7 @@ Internet of Things (IoT) and Azure are 2 areas I love to play around. Several ye
 The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller. If you follow this tutorial, you will basically build a solution to securely control (on/off) any electric appliance (e.g., a home light) remotely through your smartphone or computer. 
 
 ## The Problem
-**The requirement/user Story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop, with the following conditions.  
+**The requirement/user story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop, with the following conditions.  
 - I should be able to control the appliance even while I am away from my home.
 - The communication between my application and the device should be secure, i.e., encrypted with TLS 1.2.
 - Access to the ON/OFF button should be able to be controlled by proper authentication and authorization.
