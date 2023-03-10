@@ -12,8 +12,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-1">
             <div class="container-fluid">
-                <div class="container-sm">
-                    <img src="@ViewBag.LogoPath" />
+                <div>
+                    <img id="img-logo" src="/img/bulb-off.png" />
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ApplianceApp</a>
                 </div>
                 
@@ -28,9 +28,33 @@
                         </li>
                     </ul>
                 </div>
+
+                @*<div class="align-content-end">
+                    <span>Welcome, John</span>
+                </div>
+*@
+
+            @{
+                if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div class="dropdown align-content-end pe-3">
+                        <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            @User.Identity.Name
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/Home/Logout">Logout</a></li>
+                        </ul>
+                    </div>
+                        
+                }
+            }
+
             </div>
         </nav>
     </header>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

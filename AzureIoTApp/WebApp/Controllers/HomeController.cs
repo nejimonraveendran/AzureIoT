@@ -1,99 +1,143 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplianceService _applianceService;
+        private readonly UserService _userService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplianceService applianceService, UserService userService)
         {
             _logger = logger;
+            _applianceService = applianceService;
+            _userService = userService;
 
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            setUiStates();
-
             return View();
         }
 
-        
+
+        [HttpGet("/appliance/status")]
+        public async Task<ApplianceStatus> GetApplianceStatus()
+        {
+            try
+            {
+                return await _applianceService.GetApplianceStatusAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while calling GetApplianceStateAsync");
+
+                return ApplianceStatus.Unknown;
+            }
+
+        }
+
+
+        [HttpPost("/appliance/status/toggle")]
+        public async Task<ApplianceStatus> ToggleApplianceStatus()
+        {
+            try
+            {
+                return await _applianceService.ToggleApplianceStatusAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while calling SetApplianceStateAsync");
+
+                return ApplianceStatus.Unknown;
+            }
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new LoginViewModel());
+        }
+
+        [AllowAnonymous]
         [HttpPost]
-        public IActionResult Index(string currentState)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-
-            if(currentState== "on") 
+            try
             {
-                settApplianceState("off");
+                var user = _userService.FindUserByUserNameAndPassword(model.UserName, model.Password);
+
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                    return View();
+                }
+
+                var ci = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                ci.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserName));
+                ci.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+                
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
+                    new ClaimsPrincipal(ci), 
+                    new AuthenticationProperties 
+                    { 
+                        IsPersistent = true,
+                        IssuedUtc= DateTime.UtcNow,
+                        ExpiresUtc= DateTime.UtcNow.AddYears(1), //intentionally set to 1 year to avoid logging in too often.
+                        
+                    });
+
+                return RedirectToAction("Index");
+
             }
-            else
+            catch (Exception ex)
             {
-                settApplianceState("on");
+                _logger.LogError(ex, "Error while calling FindUserByUserNameAndPassword");
+
+                ModelState.AddModelError(string.Empty, "Unexpected error!");
+                return View();
             }
 
-            setUiStates();
+            
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Hash()
+        {
             return View();
         }
 
 
-
-
-        private void setUiStates()
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Hash(HashViewModel hashViewModel)
         {
-            string buttonClass = string.Empty;
-            string buttonText = string.Empty;
-            string logoPath = string.Empty;
+            var hash = _userService.GetHash(hashViewModel.Password, hashViewModel.Salt);
 
-            string applianceState = getApplianceState();
+            ViewBag.Hash = hash;    
 
-            switch (applianceState)
-            {
-                case "on":
-                    buttonClass = "btn-on";
-                    logoPath = "/img/bulb-on.png";
-                    buttonText = "TURN OFF";
-                    break;
-                case "off":
-                    buttonClass = "btn-off";
-                    logoPath = "/img/bulb-off.png";
-                    buttonText = "TURN ON";
-                    break;
-                default:
-                    buttonClass = "btn-waiting";
-                    logoPath = "/img/bulb-off.png";
-                    buttonText = "Can't reach Device, try refreshing!";
-                    break;
-            }
-
-            @ViewBag.LogoPath = logoPath;
-            @ViewBag.ButtonClass = buttonClass;
-            ViewBag.ButtonText = buttonText;
-            @ViewBag.CurrentState = applianceState;
+            return View(hashViewModel);
         }
 
-
-
-        private static string _state = "off";
-        private string getApplianceState()
-        {
-            return _state;
-        }
-
-        private string settApplianceState(string state)
-        {
-            return _state = state;
-        }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

@@ -125,6 +125,7 @@ A client certificate is device-specific, proving the device's identity. For this
     openssl genpkey -out myiotdevice1.key -algorithm RSA -pkeyopt rsa_keygen_bits:2048 
     openssl req -new -key myiotdevice1.key -out myiotdevice1.csr
     openssl ca -config ..\rootca\rootca.conf -in myiotdevice1.csr -out myiotdevice1.crt -extensions client_ext
+    openssl x509 -in myiotdevice1.crt -out myiotdevice1.pem -outform PEM
     openssl pkcs12 -export -in myiotdevice1.crt -inkey myiotdevice1.key -out myiotdevice1.pfx
   ```
   
@@ -145,8 +146,12 @@ In this section, we are going to log in to Azure Portal and create an IoT Hub re
   - Under Management, set permission leval as "Shared access policy + RBAC":
     ![image](https://user-images.githubusercontent.com/68135957/221959016-26de225c-d9d5-4812-acb0-b7408c12b165.png)
  
-  - Review and create.  Once done, click "Go to resource" button to go to the resource Overview page.  On the resource Overview Page, make a note of the *Hostname* field (in this example: *myorgiothub.azure-devices.net*).  We will need this info to connect our device to the hub.
-    
+  - Review and Create.  Once done, click "Go to resource" button to go to the resource Overview page. Here is the screenshot for reference: 
+  ![image](https://user-images.githubusercontent.com/68135957/224428910-63738d23-38d9-4839-81e2-abf865098582.png)
+
+  
+    On the resource Overview Page, make a note of the *Hostname* field (in this example: *myorgiothub.azure-devices.net*).  We will need this info to connect our device to the hub.
+
     Note: At the time of writing this, the Overview page displays a message "Baltimore CyberTrust certificate will expire in 2025".  Since ours is a new implementation, click "What do I need to do" link, then click "Migrate to DigiCert Global G2" button, and follow the instructions to update the certificate.
  
  - **Import Root Certificate**
