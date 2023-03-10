@@ -16,7 +16,7 @@ The solution architecture looks like the following:
 
 There are 3 main modules in the solution:
 1. **Azure IoT Hub:**  The IoT messaging hub provisioned in Azure.   
-2. **ASP.NET MVC Web Application:**  The user-facing web application, publishing "on/off" messages to the Azure IoT Hub.
+2. **ASP.NET Core MVC Web Application:**  The user-facing web application, publishing "on/off" messages to the Azure IoT Hub.
 3. **Espressif ESP32 Microcontroller:** The physical IoT device at home, subscribing to "on/off" messages from Azure IoT Hub.
 
 **The solution will work like this:** The ASP.NET Core MVC Application will be hosted as an [Azure App Service Web App](https://learn.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs) with a public URL, which can be accessed using any modern browser.  The application's home page will show an ON/OFF button.  When the the button is clicked, the web application will publish an "on/off" message to the Azure IoT Hub. On the other side, an [Espressif ESP32](https://en.wikipedia.org/wiki/ESP32) microcontroller at home has already established a connection to the Azure IoT Hub and beeen subscribing to "on/off" messages from the hub.  Upon reception of the message from the web application, the IoT Hub will pass it to the device, and the device will act accordingly, i.e., turn on or off the appliance through an electromagnetic relay.  In addition, the device will report the current status of the light back to the web application through the IoT Hub so that the web application will receive immediate feedback about the success/failure of the action.        
