@@ -5,14 +5,13 @@ Internet of Things (IoT) and Azure are 2 areas I love to play around. Several ye
 The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller. If you follow this tutorial, you will basically build a solution to securely control (on/off) any electric appliance (e.g., a home light) remotely through your smartphone or computer. 
 
 ## The Problem
-**The requirement/user story:**  As a the owner of the appliance, I, the user, want to turn on/off a home appliance remotely through my phone/laptop, with the following conditions.  
-- I should be able to control the appliance even while I am away from my home.
-- The communication between my application and the device should be secure, i.e., encrypted with TLS 1.2.
+**The requirement/user story:**  As a the owner of the appliance, I, the user, want to turn on/off the appliance remotely through my phone/laptop, with the following conditions:  
+- I should be able to control the appliance even while I am away from home.
+- The communication between my application and the device controlling the appliance should be secure, i.e., encrypted with TLS 1.2.
 - Access to the ON/OFF button should be able to be controlled by proper authentication and authorization.
-- If I decide to build it as a native mobile app later, I should be able to do so without making huge changes to the web application.  
 
 ## The Solution
-The architecture of the solution looks like the following:
+The solution architecture looks like the following:
 ![image](https://user-images.githubusercontent.com/68135957/223001314-045b2ff0-0edc-40b1-9ab3-202e3b8e67f9.png)
 
 There are 3 main modules in the solution:
