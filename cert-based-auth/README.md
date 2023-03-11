@@ -7,7 +7,7 @@ The certificate-based authentication works like this: There will be a root certi
 
 **Important Note:** The certificate generation method uses our own custom certificate authority, which is recommended for testing purposes only.  For production scenarios, use a proper public certificate authority (eg. Entrust).
 
-This document is based on the official Microsoft documentation, but it uses a simplified approach involving fewer steps, since we are doing it for testing.  The link to the documentation is here for reference: https://learn.microsoft.com/en-us/azure/iot-hub/tutorial-x509-openssl.  This tutorial assumes that the operations are carried out on a Windows machine.
+This document is based on the official Microsoft documentation, but it uses a simplified approach involving fewer steps, since we are doing it for testing.  The link to the documentation is [here](https://learn.microsoft.com/en-us/azure/iot-hub/tutorial-x509-openssl) for reference.  This tutorial assumes that the operations are carried out on a Windows machine.
 
 ### 1. Create Root Certificate
 In this step, we will create a certificate authority and a root certificate signed by the certificate authority.
