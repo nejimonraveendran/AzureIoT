@@ -278,7 +278,7 @@ We will start the implementation with the provisioning of Azure IoT Hub. We will
 
    In Visual Studio Solution Explorer, right click the web application project, click Publish, and follow the wizard instructions to publish the web application to Azure.  Make sure to select Azure App Service (Windows) when prompted for the platform OS.
 
-   When the publish operation is complete, Visual Studio should automatically open the URL to the application in the browser. Try one more time to make sure your cloud application is able to communicate with your IoT device on prem.  
+   When the publish operation is complete, Visual Studio should automatically open the URL to the application in the browser. Test the application one more time to make sure your cloud application is able to communicate with your IoT device on prem without any problem.  
 
 ## Conclusion
 It was a great experience working on this little project.  I thoroughly enjoyed every step of it. I also learned several things about Azure IoT Hub, ESP32, and MQTT protocol.  I am aware that smart switches are available in the market and it is not something someone needs to reinvent.  However, building something as a means to learn something new is not a bad idea. And from that perspective, it was time well spent!
