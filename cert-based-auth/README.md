@@ -118,8 +118,7 @@ A client certificate is device-specific, proving the device's identity. For this
     cd devices
     mkdir db
   ```
-- **Generate client certificate for myiotdevice1:** 
-- The following commands (within the *devices* folder) create a private key, a CSR, and finally the actual certificate in CRT and PEM formats. When building applications for devices like ESP32 microcontroller, we will use the PEM certificate. Optionally, you might also want to generate a certificate in PFX format out of the CRT format to use it on certain other devices/desktop applications to simulate a physical IoT device.  When prompted for the Common Name/FQDN, enter *myiotdevice1*: 
+- **Generate client certificate for myiotdevice1:** The following commands (within the *devices* folder) create a private key, a CSR, and finally the actual certificate in CRT and PEM formats. When building applications for devices like ESP32 microcontroller, we will use the PEM certificate. Optionally, you might also want to generate a certificate in PFX format out of the CRT format to use it on certain other devices/desktop applications to simulate a physical IoT device.  When prompted for the Common Name/FQDN, enter *myiotdevice1*: 
   ```bash     
     openssl rand -hex 16 > db/serial
     openssl genpkey -out myiotdevice1.key -algorithm RSA -pkeyopt rsa_keygen_bits:2048 
