@@ -208,7 +208,7 @@ We will start the implementation with the provisioning of Azure IoT Hub. We will
    _mqttClient.subscribe(_subDirectMethod); //subscribe to all Cloud2Device Direct Method calls.
    ```
    
-   **Testing the Device**: At this point, you can test the device without needing to build the web application.  For this, you will need to download and install [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases).  In Azure IoT Explorer, add a new connection using the connection string method. The connection string can be obtained from your Azure IoT Hub resource page through the menu "Security Settings" -> "Shared Access Policy" -> iothubowner ->  Primary connection string.  Refer to the screenshot below:
+   **Testing the Device**: At this point, you can test the device without needing to build the web application.  For this, you will need to download and install [Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases).  In Azure IoT Explorer, add a new connection using the connection string method. The connection string can be obtained from your Azure IoT Hub resource page through the menu "Security Settings" -> "Shared Access Policies" -> iothubowner ->  Primary connection string.  Refer to the screenshot below:
    ![image](https://user-images.githubusercontent.com/68135957/223919719-3c139208-1c27-4ea5-9a63-c5ea37e33f20.png)
    
    
