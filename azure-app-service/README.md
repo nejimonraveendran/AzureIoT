@@ -15,8 +15,8 @@ Prerequisite:  You need to have a valid Azure subscription.
   - **Publish:** This is the type of deployment package we plan to use. I would choose "Code" here because I plan to push the build output of my .NET 6 application directly. If you plan to deploy a Docker image, it should be "Docker container."  In that case, you should enable Docker support for your project in Visual Studio.
   - **Runtime:** Your application's runtime stack.  Since I am plannig to build a .NET 6 application, I will choose ".NET 6 (LTS)" here.
   - **Operating System:** The server operating system you want to use. I will choose "Windows".  Since this is a .NET 6 application, "Linux" is also a possibility.
-  - **Region:** Your preferred Azure region.  You might want to choose a location closest to the users of your application for the best performance.  In enterprise scenarios, you might also take into consideration the data residency and compliance policies of your organization.
-  - **Windows Plan:** This is the name of the App Service Plan we want to use.  An App Service Plan is a tier of Virtual Machine (VM) with a certain compute size.  You can look at various pricing plans available and choose one that is most suitable for your needs (compute, storage, features, SLA, cost, etc.).  For small use cases, S1 plan is good enough.
+  - **Region:** Your preferred Azure region.  You might want to choose a location closest to the users of your application for the best performance.  In enterprise scenarios, you might also take into consideration the data residency requirements and compliance policies of your organization.
+  - **Windows Plan:** This is the name of the App Service Plan we want to use.  An App Service Plan is the tier of the underlying Virtual Machine (VM) that powers the App Services.  You can look at various pricing plans available and choose one that is most suitable for your needs (compute, storage, features, SLA, cost, etc.).  For small use cases, S1 plan is good enough.
    
 
     For reference, here is the screenshot of a completed form.  Click Next.
