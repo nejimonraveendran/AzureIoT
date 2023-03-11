@@ -111,7 +111,7 @@ We will start the implementation with the provisioning of Azure IoT Hub. We will
       )CERT";
 
    ```
-   We already have the values for *_clientCert* and *_clientPrivateKey* available from the certificate generation step earlier in the article.  Open the *myiotdevice1.pem* file in Notepad and copy its contents to the *_clientCert* variable.  Next, open the private key file *myiotdevice1.key* and copy its contents to *_clientPrivateKey* variable.
+   We already have the values for *_clientCert* and *_clientPrivateKey* available from the [certificate generation step](https://github.com/nejimonraveendran/AzureIoT/tree/main/cert-based-auth) earlier in the article.  Open the *myiotdevice1.pem* file in Notepad and copy its contents to the *_clientCert* variable.  Next, open the private key file *myiotdevice1.key* and copy its contents to *_clientPrivateKey* variable.
 
    For finding the value for *_rootCertAzureIotHub* variable, follow the steps below:
 
