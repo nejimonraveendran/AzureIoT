@@ -34,7 +34,7 @@ Prerequisite:  You need to have a valid Azure subscription.
 ![image](https://user-images.githubusercontent.com/68135957/223563755-a2e236be-a022-4711-8c95-17a79ef1959f.png)
 
 
-At this point, if you click the "Default Domain" URL (applianceapp.azurewebsites.net), you will be taken to a dummy home page.  Now you are ready to deploy your .NET 6 web application. To deploy the application, you can use different approaches.  Some of them are:
+At this point, if you click the "Default Domain" URL (applianceapp.azurewebsites.net), you will be taken to a dummy home page that says the site is waiting for the actual content.  Now you are ready to deploy your .NET 6 web application. To deploy the application, you can use different approaches.  Some of them are:
 1. For simple scenarios like personal projects, use the Publish feature in Visual Studio with Azure as the target, [as described here](https://learn.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs).
 2. Use simple Azure CLI scripting as [described here](https://medium.com/@nejimon.raveendran/automate-deployment-of-azure-web-apps-using-azure-cli-and-powershell-adbcaa06e236). 
 3. For more enterprise scenarios, use a full-fledged CI/CD system like [Azure Pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops) or [Jenkins](https://www.jenkins.io/) plus [Octopus Deploy](https://octopus.com/).
