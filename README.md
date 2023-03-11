@@ -263,7 +263,7 @@ We will start the implementation with the provisioning of Azure IoT Hub. We will
    }
    ```
    
-   Both of the above methods use AMQP protocol to establish service-to-hub connection with Azure IoT Hub.  Azure IoT Hub in turn invokes the Direct Methods in the device using MQTT protocol, because MQTT is the protocol we use for the connection between the device and the IoT Hub. As mentioned above, *"status"* and *"toggle"* are the names of the Direct Methods defined in the device code. Refer to the "Build the Device" section for more details about these methods.  The *_targetDeviceId* variable holds the device name as defined on Azure IoT Hub (in our example *myiotdevice1*).  The value for *_connectionString* is also obtained from Azure IoT Hub, as shown in the screenshot below:
+   Both of the above methods use AMQP protocol to establish service-to-hub connection with Azure IoT Hub.  Azure IoT Hub in turn invokes the Direct Methods in the device using MQTT protocol, because MQTT is the protocol we use for the connection between the device and the IoT Hub. As mentioned above, *"status"* and *"toggle"* are the names of the Direct Methods defined in the device code. Refer to the ["Build the Device"](https://github.com/nejimonraveendran/AzureIoT/blob/main/README.md#build-the-device) section for more details about these methods.  The *_targetDeviceId* variable holds the device name as defined on Azure IoT Hub (in our example *myiotdevice1*).  The value for *_connectionString* is also obtained from Azure IoT Hub, as shown in the screenshot below:
    ![image](https://user-images.githubusercontent.com/68135957/223919719-3c139208-1c27-4ea5-9a63-c5ea37e33f20.png)
 
 
