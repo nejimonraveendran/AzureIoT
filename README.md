@@ -1,4 +1,4 @@
-# Build a Smart Switch Using Azure IoT Hub, Espressif ESP32, and ASP.NET Core
+# Build a Smart Switch Using Azure IoT Hub, ASP.NET Core, and Espressif ESP32
 
 ![image](https://user-images.githubusercontent.com/68135957/224523767-d5698445-a600-45cf-a167-56593ac917c0.png)
 
