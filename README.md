@@ -1,5 +1,7 @@
 # Build a Smart Switch Using Azure IoT Hub, Espressif ESP32, and ASP.NET Core
 
+![image](https://user-images.githubusercontent.com/68135957/224523767-d5698445-a600-45cf-a167-56593ac917c0.png)
+
 Internet of Things (IoT) and Azure are 2 areas I love to play around. Several years ago, I built a smart switch using [ESP8266](https://en.wikipedia.org/wiki/ESP8266) and [CloudMQTT](https://www.cloudmqtt.com/). I was aware of the existence of IoT services in Azure, but I never got a chance to try it hands on, so I thought why not rebuild the same solution using Azure IoT Hub! 
 
 The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller. If you follow this tutorial, you will basically build a solution to securely control (on/off) any electric appliance (e.g., a home light) remotely through your smartphone or computer. 
