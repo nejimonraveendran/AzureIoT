@@ -4,7 +4,9 @@
 
 [Internet of Things (IoT)](https://en.wikipedia.org/wiki/Internet_of_things) and [Azure](https://azure.microsoft.com/en-ca) are 2 areas I love to play around. Several years ago, I built a smart switch using [ESP8266](https://en.wikipedia.org/wiki/ESP8266) and [CloudMQTT](https://www.cloudmqtt.com/). I was aware of the existence of IoT services in Azure, but I never got a chance to try it hands on, so I thought why not rebuild the same solution using Azure IoT Hub! 
 
-The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller. If you follow this tutorial, you will basically build a solution to securely control (on/off) any electric appliance (e.g., a home light) remotely through your smartphone or computer. 
+The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller.
+
+**Important safety notice:**  The purpose of this article is to document my experience. Do not attempt to handle electric appliances unless you are comfortable doing so. 
 
 ## The Problem
 **The requirement/user story:**  As a the owner of the appliance, I, the user, want to turn on/off the appliance remotely through my phone/laptop, with the following conditions:  
