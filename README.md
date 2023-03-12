@@ -2,11 +2,11 @@
 
 ![image](https://user-images.githubusercontent.com/68135957/224523767-d5698445-a600-45cf-a167-56593ac917c0.png)
 
-[Internet of Things (IoT)](https://en.wikipedia.org/wiki/Internet_of_things) and [Azure](https://azure.microsoft.com/en-ca) are 2 areas I love to play around. Several years ago, I built a smart switch using [ESP8266](https://en.wikipedia.org/wiki/ESP8266) and [CloudMQTT](https://www.cloudmqtt.com/). I was aware of the existence of IoT services in Azure, but I never got a chance to try it hands on, so I thought why not rebuild the same solution using Azure IoT Hub! 
+[Internet of Things (IoT)](https://en.wikipedia.org/wiki/Internet_of_things) and [Azure](https://azure.microsoft.com/en-ca) are areas I love to explore. Several years ago, I built a smart switch using [ESP8266](https://en.wikipedia.org/wiki/ESP8266) and [CloudMQTT](https://www.cloudmqtt.com/). I was aware of the existence of IoT services in Azure, but I never got a chance to try it hands on, so this is an attempt to rebuild the same solution using Azure IoT Hub! 
 
-The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller.
+The purpose of this article is to document the hands-on experience and learnings obtained from implementing the solution, but this time with an improved and more secure application design.  The technologies used are [Azure IoT Hub](https://azure.microsoft.com/en-us/products/iot-hub#overview), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0), and [Espressif ESP32](https://www.espressif.com/en/products/socs/esp32) microcontroller.
 
-**Important safety notice:**  The purpose of this article is to document my experience. Do not attempt to handle electric appliances unless you are comfortable doing so. 
+**Important safety notice:**  This article is intended to document my experience. Do not attempt to handle electric appliances unless you have prior experience doing so.  
 
 ## The Problem
 **The requirement/user story:**  As a the owner of the appliance, I, the user, want to turn on/off the appliance remotely through my phone/laptop, with the following conditions:  
@@ -65,9 +65,16 @@ We will start the implementation with the provisioning of Azure IoT Hub. We will
    2. A client certificate file named *myiotdevice1.pem* and its private key file *myiotdevice1.key* on the local computer.
 
 - ### Build the Device
+   **Parts List**: Here are the details of the hardware I used:
+   - [Freenove ESP32 WROVER CAM module](https://randomnerdtutorials.com/getting-started-freenove-esp32-wrover-cam/)
+   - [Single channel 5 volt relay](https://www.circuitbasics.com/setting-up-a-5v-relay-on-the-arduino/)
+   - [Jumper wires](https://www.exploringarduino.com/parts/jumper-wires/)
+
    **Wiring Diagram**: Here are the instructions to wire the relay:
 
    ![image](https://user-images.githubusercontent.com/68135957/224414729-fd67f71c-8020-4f6d-99af-cc5ff53ce0b7.png)
+   
+   Note: It is recommended not to connect higher voltate (eg. 110 to 240 volts) appliances to the relay unless you have experience working with them. 
 
    **Coding**: For the C++ code (aka *sketch*), refer to *Esp32AzureIoT* folder in the source code.  I use [Arduino IDE](https://www.arduino.cc/en/software) for developing the ESP3 code. If you do not have Arduino IDE installed on your Windows computer, you can follow [this tutorial](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/) to set it up for ESP32 development. For Arduino IDE setup specific to ESP32 WROVER module, take a look at [this tutorial](https://randomnerdtutorials.com/getting-started-freenove-esp32-wrover-cam/).
    
