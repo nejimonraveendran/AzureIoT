@@ -12,7 +12,9 @@ This document is based on the official Microsoft documentation, but it uses a si
 ### 1. Create Root Certificate
 In this step, we will create a certificate authority and a root certificate signed by the certificate authority.
 - **Install OpenSSL:** If OpenSSL is not already installed, get **OpenSSL for Windows** from [here](https://wiki.openssl.org/index.php/Binaries).  Add the OpenSSL bin path to Windows PATH environment variables.
- 
+
+**Note: ** At any point in the following steps, if  you receive a warning message like "WARNING: can't open config file: /usr/local/ssl/openssl.cnf" from the OpenSSL utility, set the environment variable OPENSSL_CONF to the location of the _openssl.cnf_ file.
+
 - **Create root CA directory structure:** Open command prompt (CMD) in C drive as Administrator, and issue following commands: 
   ```bash
     mkdir IoTCerts
